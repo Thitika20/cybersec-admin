@@ -1,0 +1,24 @@
+### CREATEUSER 
+POST http://localhost:5000/usr/usercreate
+Content-Type: application/json
+
+{
+        "username":"thitikax",
+        "password":"thissx"
+}
+
+### Update User 
+PUT http://localhost:5000/usr/userupdate/2
+Content-Type: application/json
+
+{
+    "username": "thissxx", 
+    "password": "newpassword"
+}
+
+### Delete User 
+DELETE http://localhost:5000/user/delete/1
+
+### Search User 
+GET http://localhost:5000/usr/user/1 
+Content-Type: application/json
