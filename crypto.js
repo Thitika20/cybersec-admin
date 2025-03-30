@@ -1,12 +1,14 @@
-const crypto = require("crypto-js");
+const CryptoJS = require("crypto-js");
 
-const my_password = 'mypass';
-const my_key = 'yui';
+const myPass = 'mypass';
+const myKey = 'gamyuieiei';
+
 
 //encode
-const encode = crypto.AES.encrypt(my_password, my_key);
-console.log('encode', encode.toString())
+const encode = CryptoJS.AES.encrypt(myPass, myKey);
+console.log('encode: ', encode.toString());
+
 
 //decode
-const decode = crypto.AES.decrypt(encode.toString(), my_key);
-console.log('decode', decode.toString(crypto.enc.Utf8));
+const decode = CryptoJS.AES.decrypt(encode.toString() , myKey);
+console.log('decode: ', decode.toString(CryptoJS.enc.Utf8));

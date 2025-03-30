@@ -1,6 +1,8 @@
 const express = require("express");
 const { PrismaClient } = require("@prisma/client");
 const cors = require("cors");
+const CryptoJS = require("crypto-js");
+
 
 const app = express();
 const PORT = 5000;
@@ -19,8 +21,10 @@ app.post("/usr/usercreate", async (req, res) => {
         .json({ error: "Username and password are required" });
     }
 
+    const encodedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
+
     const user = await prisma.user.create({
-      data: { username, password },
+      data: { username, password: encodedPassword},
     });
 
     res.json({ message: "User created successfully", user });
@@ -46,6 +50,7 @@ app.get("/usr/user/:id", async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { id: Number(id) },
     });
+    
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -67,8 +72,10 @@ app.put("/usr/userupdate/:id", async (req, res) => {
 
     const updatedUser = await prisma.user.update({
       where: { id: Number(id) },
-      data: { username, password },
+      data: { username, password: encodedPassword },
     });
+
+    const encodedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
 
     res.json({ message: "User updated successfully", updatedUser });
   } catch (error) {
